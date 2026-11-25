@@ -1,21 +1,28 @@
 # everMan
 
-An Everforest-based theme for VS Code 1.109 and later, with dark and light variants. **everMan Dark** keeps the original Everforest editor background and uses darker shades for the sidebar, panels, and window frame.
+An Everforest-based theme for modern VS Code, with dark and light variants.
 
 ![everMan Dark in VS Code](docs/everman-dark.png)
 
-## Install on Windows
+## Install
 
-You only need VS Code and a prebuilt `.vsix` file. No Node.js, npm, or terminal required.
+You only need VS Code and a prebuilt `.vsix` file see the releases
 
-1. Save the `everman-0.1.0.vsix` file you received. The source ZIP is not an installable extension.
+1. Get the latest release
 2. In VS Code, press **Ctrl+Shift+P** and run **Extensions: Install from VSIX...**
-3. Select `everman-0.1.0.vsix`.
-4. Run **Preferences: Color Theme** and choose **everMan Dark** or **everMan Light**.
+3. Select `everman-<version>.vsix`.
 
 ## Build a VSIX from source
 
-If you only have the source, build the VSIX with Node.js 22 or later: run `npm ci`, then `npm run package`. Share the resulting `.vsix` file with anyone who wants to install the theme.
+From the source folder, run this in Bash with Node.js 22+ and the VS Code `code` command on your PATH:
+
+```bash
+npm ci &&
+    npm run package &&
+    code --install-extension "everman-$(node -p "require('./package.json').version").vsix" --force
+```
+
+This builds the VSIX and installs it in VS Code, replacing any installed copy of the same version.
 
 ## Customize
 
