@@ -3,7 +3,7 @@ import { getPalette } from "./palette";
 import { getSemantic } from "./semantic";
 import { getSyntax } from "./syntax";
 import { getWorkbench } from "./workbench";
-import { getDarkChrome } from "./workbench/dark-chrome";
+import { getChrome } from "./workbench/chrome";
 import { getModernColors } from "./workbench/modern";
 
 export const variants = ["dark", "light"] as const;
@@ -12,7 +12,7 @@ export function renderTheme(configuration: Configuration, variant: (typeof varia
   const palette = getPalette(configuration, variant);
   const colors = {
     ...getWorkbench(configuration, variant),
-    ...(variant === "dark" ? getDarkChrome(palette) : {}),
+    ...getChrome(palette),
   };
   return JSON.stringify({
     name: variant === "dark" ? "everMan Dark" : "everMan Light",

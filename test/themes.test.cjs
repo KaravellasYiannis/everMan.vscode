@@ -5,7 +5,7 @@ const { contributes } = require("../package.json");
 const { getPalette } = require("../dist/palette");
 const { renderTheme, variants } = require("../dist/theme");
 const { getWorkbench } = require("../dist/workbench");
-const { getDarkChrome } = require("../dist/workbench/dark-chrome");
+const { getChrome } = require("../dist/workbench/chrome");
 
 const defaults = Object.fromEntries(Object.entries(contributes.configuration.properties)
   .map(([key, { default: value }]) => [key.slice("everMan.".length), value]));
@@ -17,12 +17,12 @@ const upstream = {
 };
 
 for (const [index, variant] of variants.entries()) {
-  test(`${variant}: bundled theme preserves upstream defaults outside dark chrome`, () => {
+  test(`${variant}: bundled theme preserves upstream defaults outside workbench surfaces`, () => {
     const contribution = contributes.themes[index];
     const { name, colors, ...theme } = require(`../${contribution.path}`);
     assert.equal(name, contribution.label);
     const legacy = getWorkbench(defaults, variant);
-    const chrome = variant === "dark" ? getDarkChrome(getPalette(defaults, variant)) : {};
+    const chrome = getChrome(getPalette(defaults, variant));
     const legacyColors = Object.fromEntries(Object.keys(legacy)
       .map((key) => [key, key in chrome ? legacy[key] : colors[key]]));
     const { tokenColors, ...metadata } = theme;
@@ -46,7 +46,7 @@ for (const [index, variant] of variants.entries()) {
         const palette = getPalette(options, variant);
         const legacy = {
           ...getWorkbench(options, variant),
-          ...(variant === "dark" ? getDarkChrome(palette) : {}),
+          ...getChrome(palette),
         };
         const { colors } = JSON.parse(renderTheme(options, variant));
         const bases = Object.values(palette).map((value) => value.slice(0, 7));
@@ -64,14 +64,13 @@ for (const [index, variant] of variants.entries()) {
         assert.equal(colors["surface.border"], options.highContrast ? palette.bg5 : palette.bg4);
         assert.equal(colors["agentsChatInput.foreground"], palette.fg);
         assert.equal(colors["editor.background"], palette.bg);
-        if (variant === "dark") {
-          assert.equal(colors["sideBar.background"], palette.bg1);
-          assert.equal(colors["terminal.background"], palette.bg1);
-          assert.equal(colors["editorGroupHeader.tabsBackground"], palette.bg0);
-          assert.equal(colors["modernUI.shellBackground"], palette.bg0);
-          assert.equal(colors["modernEditorTab.activeBackground"], palette.bg4);
-          assert.equal(colors["modernEditorTab.activeHoverBackground"], palette.bg5);
-        }
+        assert.equal(colors["sideBar.background"], palette.bg1);
+        assert.equal(colors["panel.background"], palette.bg1);
+        assert.equal(colors["terminal.background"], palette.bg1);
+        assert.equal(colors["editorGroupHeader.tabsBackground"], palette.bg0);
+        assert.equal(colors["modernUI.shellBackground"], palette.bg0);
+        assert.equal(colors["modernEditorTab.activeBackground"], variant === "dark" ? palette.bg4 : palette.bg);
+        assert.equal(colors["modernEditorTab.activeHoverBackground"], variant === "dark" ? palette.bg5 : palette.bg);
       }
     }
   });

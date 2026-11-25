@@ -4,8 +4,9 @@ import type { getWorkbench } from "./index";
 export function getModernColors(colors: ReturnType<typeof getWorkbench>, palette: Palette, highContrast: boolean, dark: boolean) {
   const { bg, bg1, bg2, bg3, bg4, bg5, fg, grey2, shadow, red, yellow, green, aqua, blue, purple, dimGreen, dimRed, dimBlue, dimAqua } = palette;
   const border = highContrast ? bg5 : bg4;
-  const activeTab = dark ? bg4 : bg3;
-  const activeTabHover = dark ? bg5 : bg4;
+  // Use the light editor shade to keep the active label legible against the darker tab strip.
+  const activeTab = dark ? bg4 : bg;
+  const activeTabHover = dark ? bg5 : bg;
 
   return {
     // Keep the original indent-guide colors under the current IDs.

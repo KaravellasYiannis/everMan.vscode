@@ -1,6 +1,6 @@
 import { Palette } from "../interface";
 
-export function getDarkChrome({ bg0, bg1 }: Palette) {
+export function getChrome({ bg0, bg1 }: Palette) {
   return {
     "sideBar.background": bg1,
     "panel.background": bg1,
