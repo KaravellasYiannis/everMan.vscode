@@ -1,0 +1,206 @@
+{
+  "name": "everman",
+  "displayName": "everMan",
+  "description": "The Everforest palette and highlighting for modern Visual Studio Code.",
+  "version": "0.1.0",
+  "publisher": "karavellas",
+  "license": "MIT",
+  "keywords": [
+    "green",
+    "theme"
+  ],
+  "galleryBanner": {
+    "color": "#2f383e",
+    "theme": "dark"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "extensionKind": [
+    "ui"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": true
+  },
+  "main": "./dist/index-client.js",
+  "browser": "./dist/index-web.js",
+  "contributes": {
+    "themes": [
+      {
+        "label": "everMan Dark",
+        "uiTheme": "vs-dark",
+        "path": "./dist/themes/everman-dark.json"
+      },
+      {
+        "label": "everMan Light",
+        "uiTheme": "vs",
+        "path": "./dist/themes/everman-light.json"
+      }
+    ],
+    "configuration": {
+      "title": "everMan",
+      "properties": {
+        "everMan.darkContrast": {
+          "scope": "application",
+          "type": "string",
+          "default": "medium",
+          "description": "Background contrast for the dark variant.",
+          "enum": [
+            "soft",
+            "medium",
+            "hard"
+          ]
+        },
+        "everMan.lightContrast": {
+          "scope": "application",
+          "type": "string",
+          "default": "medium",
+          "description": "Background contrast for the light variant.",
+          "enum": [
+            "soft",
+            "medium",
+            "hard"
+          ]
+        },
+        "everMan.darkWorkbench": {
+          "scope": "application",
+          "type": "string",
+          "default": "material",
+          "description": "Workbench style for the dark variant.",
+          "enum": [
+            "material",
+            "flat",
+            "high-contrast"
+          ]
+        },
+        "everMan.lightWorkbench": {
+          "scope": "application",
+          "type": "string",
+          "default": "material",
+          "description": "Workbench style for the light variant.",
+          "enum": [
+            "material",
+            "flat",
+            "high-contrast"
+          ]
+        },
+        "everMan.darkCursor": {
+          "scope": "application",
+          "type": "string",
+          "default": "white",
+          "description": "The cursor color in the dark variant.",
+          "enum": [
+            "white",
+            "red",
+            "orange",
+            "yellow",
+            "green",
+            "aqua",
+            "blue",
+            "purple"
+          ]
+        },
+        "everMan.lightCursor": {
+          "scope": "application",
+          "type": "string",
+          "default": "black",
+          "description": "The cursor color in the light variant.",
+          "enum": [
+            "black",
+            "red",
+            "orange",
+            "yellow",
+            "green",
+            "aqua",
+            "blue",
+            "purple"
+          ]
+        },
+        "everMan.darkSelection": {
+          "scope": "application",
+          "type": "string",
+          "default": "grey",
+          "description": "The background color of selected text in the dark variant.",
+          "enum": [
+            "grey",
+            "red",
+            "orange",
+            "yellow",
+            "green",
+            "aqua",
+            "blue",
+            "purple"
+          ]
+        },
+        "everMan.lightSelection": {
+          "scope": "application",
+          "type": "string",
+          "default": "grey",
+          "description": "The background color of selected text in the light variant.",
+          "enum": [
+            "grey",
+            "red",
+            "orange",
+            "yellow",
+            "green",
+            "aqua",
+            "blue",
+            "purple"
+          ]
+        },
+        "everMan.italicKeywords": {
+          "scope": "application",
+          "type": "boolean",
+          "default": false,
+          "description": "Italicize keywords or not."
+        },
+        "everMan.italicComments": {
+          "scope": "application",
+          "type": "boolean",
+          "default": true,
+          "description": "Italicize comments or not."
+        },
+        "everMan.diagnosticTextBackgroundOpacity": {
+          "scope": "application",
+          "type": "string",
+          "default": "0%",
+          "markdownDescription": "The opacity of the background color of [diagnostic text](https://code.visualstudio.com/updates/v1_52#_error-background-colors).",
+          "enum": [
+            "0%",
+            "12.5%",
+            "25%",
+            "37.5%",
+            "50%"
+          ]
+        },
+        "everMan.highContrast": {
+          "scope": "application",
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to add an additional border around items across the UI to increase the contrast."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "tsc && node scripts/generate-themes.cjs",
+    "test": "npm run build && node --test",
+    "package": "vsce package --allow-missing-repository --no-rewrite-relative-links"
+  },
+  "engines": {
+    "vscode": "^1.109.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.7",
+    "@types/vscode": "1.109.0",
+    "@vscode/vsce": "^4.1.1",
+    "typescript": "^6.0.3"
+  }
+}
